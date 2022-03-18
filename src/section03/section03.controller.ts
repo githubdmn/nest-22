@@ -13,7 +13,7 @@ export class Section03Controller {
   }
 
   @Get('/:id')
-  getMessage() {
+  getMessage(): string {
     return 'Message with id';
   }
 }
