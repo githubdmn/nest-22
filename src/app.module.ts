@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { Section08Module } from './section08/section08.module';
+import { Section09Module } from './section09/section09.module';
 
 @Module({
-	imports: [Section08Module],
+	imports: [Section09Module],
 	controllers: [],
 	providers: [],
 })
