@@ -11,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 		ReportsModule,
 		TypeOrmModule.forRoot({
 			type: 'sqlite',
-			database: 'nest.section08',
+			database: 'db.sqlite',
 			entities: [],
 			synchronize: true,
 		}),
