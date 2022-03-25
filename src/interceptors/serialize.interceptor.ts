@@ -1,9 +1,23 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
+import {
+	CallHandler,
+	ExecutionContext,
+	NestInterceptor,
+	UseInterceptors,
+} from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export default class SerializeInterceptor implements NestInterceptor {
+// Any class/object type
+interface ClasConstructor {
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	new (...args: any[]): {};
+}
+export function Serialize(dto: ClasConstructor) {
+	return UseInterceptors(new SerializeInterceptor(dto));
+}
+
+export class SerializeInterceptor implements NestInterceptor {
 	constructor(private dto: any) {}
 	intercept(
 		context: ExecutionContext,

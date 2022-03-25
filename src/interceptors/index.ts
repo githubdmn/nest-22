@@ -1,3 +1,3 @@
-import SerializeInterceptor from './serialize.interceptor';
+import { SerializeInterceptor, Serialize } from './serialize.interceptor';
 
-export { SerializeInterceptor };
+export { SerializeInterceptor, Serialize };
