@@ -8,13 +8,13 @@ import {
 	Patch,
 	Post,
 	Query,
-	UseInterceptors,
 } from '@nestjs/common';
-import { SerializeInterceptor } from 'src/interceptors';
+import { Serialize } from 'src/interceptors';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
 import { UsersService } from './users.service';
 
 @Controller('/auth')
+@Serialize(UserDto)
 export class UsersController {
 	constructor(private userService: UsersService) {}
 	@Post('/signup')
@@ -22,7 +22,8 @@ export class UsersController {
 		return this.userService.create(body.email, body.password);
 	}
 
-	@UseInterceptors(new SerializeInterceptor(UserDto))
+	// @UseInterceptors(new SerializeInterceptor(UserDto))
+	// @Serialize(UserDto)
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {
 		const user = await this.userService.findById(parseInt(id));
