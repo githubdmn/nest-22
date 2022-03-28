@@ -13,6 +13,8 @@ interface ClasConstructor {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	new (...args: any[]): {};
 }
+
+// function Serialize - Wrapping SerializeInterceptor into a Decorator
 export function Serialize(dto: ClasConstructor) {
 	return UseInterceptors(new SerializeInterceptor(dto));
 }
