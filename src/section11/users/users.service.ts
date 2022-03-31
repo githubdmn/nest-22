@@ -10,6 +10,9 @@ export class UsersService {
 		const user = this.repository.create({ email, password });
 		return this.repository.save(user);
 	}
+	findAll() {
+		return this.repository.find();
+	}
 	findById(id: number) {
 		return this.repository.findOne(id);
 	}
