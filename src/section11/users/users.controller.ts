@@ -9,12 +9,14 @@ import {
 	Post,
 	Query,
 	Session,
+	UseGuards,
 	UseInterceptors,
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
+import { AuthGuard } from './guards';
 import { CurrentUserInterceptor } from './interceptors';
 import User from './user.entity';
 import { UsersService } from './users.service';
@@ -87,6 +89,7 @@ export class UsersController {
 	}
 
 	@Get('/cookie-test/my-profile')
+	@UseGuards(AuthGuard) // access this path only if user is logged in
 	myProfile(@Session() session: any) {
 		return this.userService.findById(session.userId);
 	}
