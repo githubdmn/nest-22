@@ -12,9 +12,9 @@ const passwordLength = 32;
 
 @Injectable()
 export class AuthService {
-	constructor(private userService: UsersService) {}
+	constructor(private userService: UsersService) { }
 
-	async signup(email: string, password: string) {
+	async register(email: string, password: string) {
 		const users = await this.userService.findByEmail(email);
 		if (users.length) throw new BadRequestException('Email is in use');
 		const salt = randomBytes(8).toString('hex');
@@ -28,7 +28,7 @@ export class AuthService {
 		return user;
 	}
 
-	async signin(email: string, password: string) {
+	async login(email: string, password: string) {
 		const [user] = await this.userService.findByEmail(email);
 		if (!user) throw new NotFoundException('User not found');
 		const [salt, storedHash] = user.password.split('.');
