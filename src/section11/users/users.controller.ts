@@ -26,14 +26,14 @@ export class UsersController {
 		return this.userService.findAll();
 	}
 
-	@Post('/signup')
+	@Post('/register')
 	createUser(@Body() { email, password }: CreateUserDto) {
-		return this.auth.signup(email, password);
+		return this.auth.register(email, password);
 	}
 
-	@Post('/signin')
-	signin(@Body() { email, password }: CreateUserDto) {
-		return this.auth.signin(email, password);
+	@Post('/login')
+	login(@Body() { email, password }: CreateUserDto) {
+		return this.auth.login(email, password);
 	}
 
 	@Get('/:id')
@@ -59,23 +59,23 @@ export class UsersController {
 	}
 
 	// Route for testing cookie
-	@Post('/cookie-test/signup')
-	async createUserCookie(
+	@Post('/cookie-test/register')
+	async registerCookie(
 		@Body() { email, password }: CreateUserDto,
 		@Session() session: any,
 	) {
-		const user = await this.auth.signup(email, password);
+		const user = await this.auth.register(email, password);
 		session.userId = user.id;
 		return user;
 	}
 
 	// Route for testing cookie
-	@Post('/cookie-test/signin')
-	async signinCookie(
+	@Post('/cookie-test/login')
+	async loginCookie(
 		@Body() { email, password }: CreateUserDto,
 		@Session() session: any,
 	) {
-		const user = await this.auth.signin(email, password);
+		const user = await this.auth.login(email, password);
 		session.userId = user.id;
 		return user;
 	}
@@ -83,5 +83,10 @@ export class UsersController {
 	@Get('/cookie-test/my-profile')
 	myProfile(@Session() session: any) {
 		return this.userService.findById(session.userId);
+	}
+
+	@Post('/cookie-test/logout')
+	logoutCookie(@Session() session: any) {
+		session.userId = null;
 	}
 }
