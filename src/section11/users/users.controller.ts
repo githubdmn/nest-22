@@ -21,7 +21,8 @@ import { UsersService } from './users.service';
 
 @Controller('auth')
 @Serialize(UserDto)
-@UseInterceptors(CurrentUserInterceptor)
+//Remove decorator below and apply it globally
+//@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
 	constructor(private userService: UsersService, private auth: AuthService) { }
 
