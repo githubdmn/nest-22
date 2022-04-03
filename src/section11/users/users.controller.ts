@@ -8,6 +8,7 @@ import {
 	Patch,
 	Post,
 	Query,
+	Session,
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors';
 import { AuthService } from './auth.service';
@@ -17,7 +18,7 @@ import { UsersService } from './users.service';
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
-	constructor(private userService: UsersService, private auth: AuthService) {}
+	constructor(private userService: UsersService, private auth: AuthService) { }
 
 	//TODO: DELETE THIS - USE FOR DEVELOPMENT PURPOSES ONLY
 	@Get('/all')
@@ -55,5 +56,32 @@ export class UsersController {
 	@Patch('/:id')
 	updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
 		return this.userService.update(parseInt(id), body);
+	}
+
+	// Route for testing cookie
+	@Post('/cookie-test/signup')
+	async createUserCookie(
+		@Body() { email, password }: CreateUserDto,
+		@Session() session: any,
+	) {
+		const user = await this.auth.signup(email, password);
+		session.userId = user.id;
+		return user;
+	}
+
+	// Route for testing cookie
+	@Post('/cookie-test/signin')
+	async signinCookie(
+		@Body() { email, password }: CreateUserDto,
+		@Session() session: any,
+	) {
+		const user = await this.auth.signin(email, password);
+		session.userId = user.id;
+		return user;
+	}
+
+	@Get('/cookie-test/my-profile')
+	myProfile(@Session() session: any) {
+		return this.userService.findById(session.userId);
 	}
 }
