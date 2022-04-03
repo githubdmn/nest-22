@@ -9,14 +9,19 @@ import {
 	Post,
 	Query,
 	Session,
+	UseInterceptors,
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
+import { CurrentUserInterceptor } from './interceptors';
+import User from './user.entity';
 import { UsersService } from './users.service';
 
 @Controller('auth')
 @Serialize(UserDto)
+@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
 	constructor(private userService: UsersService, private auth: AuthService) { }
 
@@ -83,6 +88,11 @@ export class UsersController {
 	@Get('/cookie-test/my-profile')
 	myProfile(@Session() session: any) {
 		return this.userService.findById(session.userId);
+	}
+
+	@Get('/custom-decorator/my-profile')
+	myProfileCustomDecorator(@CurrentUser() user: User) {
+		return user;
 	}
 
 	@Post('/cookie-test/logout')
