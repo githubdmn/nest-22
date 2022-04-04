@@ -28,3 +28,14 @@ npx nest generate controller section11/reports --no-spec
 npx nest generate service section11/users --no-spec
 npx nest generate service section11/users/auth --no-spec
 npx nest generate service section11/reports --no-spec
+
+npx nest generate module section12
+npx nest generate controller section12
+npx nest generate service section12
+npx nest generate module section12/users
+npx nest generate module section12/reports
+npx nest generate controller section12/users
+npx nest generate controller section12/reports
+npx nest generate service section12/users
+npx nest generate service section12/users/auth
+npx nest generate service section12/reports
