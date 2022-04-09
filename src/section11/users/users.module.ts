@@ -20,4 +20,4 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 	],
 	imports: [TypeOrmModule.forFeature([User])],
 })
-export class UsersModule { }
+export class UsersModule {}

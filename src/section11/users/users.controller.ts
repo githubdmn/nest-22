@@ -26,7 +26,7 @@ import { UsersService } from './users.service';
 //Remove decorator below and apply it globally
 //@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
-	constructor(private userService: UsersService, private auth: AuthService) { }
+	constructor(private userService: UsersService, private auth: AuthService) {}
 
 	//TODO: DELETE THIS - USE FOR DEVELOPMENT PURPOSES ONLY
 	@Get('/all')
